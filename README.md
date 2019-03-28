@@ -1,2 +1,0 @@
-# CS596_Flocking
-
