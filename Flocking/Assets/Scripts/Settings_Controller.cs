@@ -15,8 +15,6 @@ public class Settings_Controller : MonoBehaviour {
         total_boids = 5;
         boids = new GameObject[total_boids + 1];
 
-        player = GameObject.FindGameObjectWithTag("Player");
-
         settings = GameObject.FindWithTag("SettingsUI");
         settings.SetActive(false);
 
@@ -33,7 +31,6 @@ public class Settings_Controller : MonoBehaviour {
             boids[i].name = "boid" + i;
         }
         Lazy_flight();
-        Debug.Log(player.name);
     }
 
     GameObject Make_boid() {
@@ -68,6 +65,8 @@ public class Settings_Controller : MonoBehaviour {
     }
 
     public void Follow_the_leader() {
+        player = GameObject.FindGameObjectWithTag("Player");
+        Debug.Log(player.name);
         for (int i = 0; i < total_boids; i++) {
             boids[i].GetComponent<Boid_Controller>().NewTarget(player);
         }

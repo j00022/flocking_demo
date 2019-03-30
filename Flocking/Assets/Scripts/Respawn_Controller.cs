@@ -27,6 +27,7 @@ public class Respawn_Controller : MonoBehaviour {
         Respawn();
     }
 
+    //Limits of scene
     //X = -100 - 170
     //Y = 20 - 100
     //Z = -100 - 100
