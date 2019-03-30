@@ -33,7 +33,12 @@ public class Settings_Controller : MonoBehaviour {
         Lazy_flight();
     }
 
-    GameObject Make_boid() {
+    public void Update() {
+        if (Input.GetKeyDown(KeyCode.Escape))
+            Toggle_settings();
+    }
+
+    public GameObject Make_boid() {
         GameObject boid;
         boid = Instantiate(Resources.Load("Missil_01")) as GameObject;
         boid.tag = "Snitch";
@@ -72,17 +77,14 @@ public class Settings_Controller : MonoBehaviour {
         }
     }
 
-    public void OnValueChange() {
+    public void Flocking_behavior() {
         Dropdown uiDropdown = GameObject.Find("Dropdown").GetComponent<Dropdown>();
         int option = uiDropdown.value;
         switch (option) {
             case 0: //Lazy flight
                 Lazy_flight();
                 break;
-            case 1: //Circle a tree
-                Debug.Log("not yet implemented");
-                break;
-            case 2: //Follow the leader
+            case 1: //Follow the leader
                 Follow_the_leader();
                 break;
         }
