@@ -1,21 +1,26 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Settings_Controller : MonoBehaviour {
 
     GameObject settings;
+    GameObject player;
     GameObject lazy_target;
     GameObject[] boids;
     public int total_boids;
 
-	void Start () {
+    void Start() {
         total_boids = 5;
         boids = new GameObject[total_boids + 1];
+
+        player = GameObject.FindGameObjectWithTag("Player");
 
         settings = GameObject.FindWithTag("SettingsUI");
         settings.SetActive(false);
 
+        //Create Lazy_Target
         lazy_target = GameObject.CreatePrimitive(PrimitiveType.Sphere);
         lazy_target.name = "lazy_target";
         lazy_target.GetComponent<SphereCollider>().isTrigger = true;
@@ -28,28 +33,16 @@ public class Settings_Controller : MonoBehaviour {
             boids[i].name = "boid" + i;
         }
         Lazy_flight();
-    }
-	
-	public void Toggle_settings() {
-        settings.SetActive(!settings.activeSelf);
-    }
-    
-    public void Lazy_flight() {
-        for (int i = 0; i < total_boids; i++) {
-            boids[i].GetComponent<Boid_Controller>().NewTarget(lazy_target);
-        }
+        Debug.Log(player.name);
     }
 
     GameObject Make_boid() {
         GameObject boid;
-        boid = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        boid = Instantiate(Resources.Load("Missil_01")) as GameObject;
         boid.tag = "Snitch";
-        boid.GetComponent<Renderer>().material.color = Color.green;
-
         boid.AddComponent<Rigidbody>().useGravity = false;
         boid.AddComponent<Boid_Controller>();
-
-        boid.transform.localScale += new Vector3(-.25f, -.25f, -.25f);
+        boid.AddComponent<CapsuleCollider>();
 
         float x = Random.Range(-100, 170);
         float y = Random.Range(30, 100);
@@ -58,5 +51,42 @@ public class Settings_Controller : MonoBehaviour {
         boid.transform.position = new Vector3(x, y, z);
 
         return boid;
+    }
+
+    public void Toggle_settings() {
+        settings.SetActive(!settings.activeSelf);
+    }
+
+    public void Close_settings() {
+        settings.SetActive(false);
+    }
+
+    public void Lazy_flight() {
+        for (int i = 0; i < total_boids; i++) {
+            boids[i].GetComponent<Boid_Controller>().NewTarget(lazy_target);
+        }
+    }
+
+    public void Follow_the_leader() {
+        for (int i = 0; i < total_boids; i++) {
+            boids[i].GetComponent<Boid_Controller>().NewTarget(player);
+        }
+    }
+
+    public void OnValueChange() {
+        Dropdown uiDropdown = GameObject.Find("Dropdown").GetComponent<Dropdown>();
+        int option = uiDropdown.value;
+        switch (option) {
+            case 0: //Lazy flight
+                Lazy_flight();
+                break;
+            case 1: //Circle a tree
+                Debug.Log("not yet implemented");
+                Lazy_flight();
+                break;
+            case 2: //Follow the leader
+                Follow_the_leader();
+                break;
+        }
     }
 }
