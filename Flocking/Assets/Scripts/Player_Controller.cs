@@ -18,12 +18,11 @@ public class Player_Controller : MonoBehaviour {
     private float yaw = 0.0f;
     private float pitch = 0.0f;
 
-    void Start() {
-        speed = 15;
-
+    void Make_player() {
         //Create player
         player = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-        player.gameObject.tag = "Player";
+        player.name = "Player";
+        player.tag = "Player";
         player.transform.localScale += new Vector3(-.25f, -.25f, -.25f);
         player.transform.position = new Vector3(0, 5, 0);
 
@@ -39,7 +38,13 @@ public class Player_Controller : MonoBehaviour {
         //Create and place camera
         cam = new GameObject();
         cam.AddComponent<Camera>();
+        cam.name = "Player Camera";
         offset = new Vector3(0, 0, 0);
+    }
+
+    void Start() {
+        speed = 15;
+        Make_player();
     }
 
     void FixedUpdate() {
@@ -59,5 +64,4 @@ public class Player_Controller : MonoBehaviour {
 
         cam.transform.eulerAngles = new Vector3(pitch, yaw, 0.0f);
     }
-
 }

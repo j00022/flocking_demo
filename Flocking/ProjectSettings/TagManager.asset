@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - SettingsUI
+  - Snitch
+  - Seeker
   layers:
   - Default
   - TransparentFX
