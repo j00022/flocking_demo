@@ -12,7 +12,7 @@ public class Settings_Controller : MonoBehaviour {
     public int total_boids;
 
     void Start() {
-        total_boids = 5;
+        total_boids = 10;
         boids = new GameObject[total_boids + 1];
 
         settings = GameObject.FindWithTag("SettingsUI");
@@ -39,7 +39,7 @@ public class Settings_Controller : MonoBehaviour {
         boid.tag = "Snitch";
         boid.AddComponent<Rigidbody>().useGravity = false;
         boid.AddComponent<Boid_Controller>();
-        boid.AddComponent<CapsuleCollider>();
+        boid.AddComponent<BoxCollider>();
 
         float x = Random.Range(-100, 170);
         float y = Random.Range(30, 100);
@@ -81,7 +81,6 @@ public class Settings_Controller : MonoBehaviour {
                 break;
             case 1: //Circle a tree
                 Debug.Log("not yet implemented");
-                Lazy_flight();
                 break;
             case 2: //Follow the leader
                 Follow_the_leader();

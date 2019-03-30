@@ -43,7 +43,7 @@ public class Player_Controller : MonoBehaviour {
     }
 
     void Start() {
-        speed = 15;
+        speed = 20;
         Make_player();
     }
 

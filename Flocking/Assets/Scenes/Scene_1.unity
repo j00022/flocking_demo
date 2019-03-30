@@ -740,7 +740,7 @@ MonoBehaviour:
       m_Image: {fileID: 0}
     - m_Text: Circle a Tree
       m_Image: {fileID: 0}
-    - m_Text: Follow the Leader
+    - m_Text: Chase the Player
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:

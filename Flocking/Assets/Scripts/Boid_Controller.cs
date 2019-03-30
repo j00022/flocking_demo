@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Boid_Controller : MonoBehaviour {
 
-    public float speed = 1000;
+    public float speed = 30;
+    public float turn_speed = 100;
     public GameObject target;
     public GameObject boid;
 
@@ -12,19 +13,15 @@ public class Boid_Controller : MonoBehaviour {
         boid = this.gameObject;
     }
 
-    // Update is called once per frame
     void Update () {
         Follow(boid, target);
 	}
 
     public void Follow(GameObject boid, GameObject target) {
-        //Get direction
-        Vector3 direction = (target.transform.position - boid.transform.position).normalized;
-        Vector3 newDir = Vector3.RotateTowards(boid.transform.forward, direction, 1.5f * Time.deltaTime, 0f);
-        //Rotate
-        boid.transform.rotation = Quaternion.LookRotation(newDir);
-
-        boid.GetComponent<Rigidbody>().velocity = boid.transform.forward * speed * Time.smoothDeltaTime;
+        Vector3 direction = target.transform.position - boid.transform.position;
+        Quaternion newDir = Quaternion.LookRotation(direction);
+        boid.transform.rotation = Quaternion.RotateTowards(boid.transform.rotation, newDir, turn_speed * Time.deltaTime);
+        boid.transform.position += boid.transform.forward * speed * Time.deltaTime;
     }
 
     public void NewTarget(GameObject newTarget) {
